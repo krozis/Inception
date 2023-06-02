@@ -1,2 +1,4 @@
-# ft_inception
-ft_inception project from 42 Common-core
+# Inception
+Inception project from 42 Common-core
+
+This project is a system admin project.
