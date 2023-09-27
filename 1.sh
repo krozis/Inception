@@ -2,7 +2,6 @@
 adduser krozis
 echo "http://dl-cdn.alpinelinux.org/alpine/v3.18/main" > /etc/apk/repositories
 echo "http://dl-cdn.alpinelinux.org/alpine/v3.18/community" >> /etc/apk/repositories
-git clone "https://github.com/krozis/Inception.git" /root/Inception
 apk update
 apk add sudo
 apk add nano
