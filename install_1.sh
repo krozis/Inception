@@ -11,11 +11,10 @@ echo "http://dl-cdn.alpinelinux.org/alpine/v3.18/community" >> /etc/apk/reposito
 yes | setup-disk -q -m sys /dev/sda
 setup-sshd -c openssh
 setup-ntp -c chrony
-sleep 2
 apk update
-sleep 2
 apk add sudo nano docker ufw
-sleep 2
 rc-update add docker default
 rc-update add ufw default
-#poweroff
+adduser -D krozis
+echo "krozis ALL=(ALL) ALL" >> /etc/sudoers.d/sudo
+poweroff
