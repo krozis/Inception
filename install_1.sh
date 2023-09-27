@@ -12,9 +12,12 @@ yes | setup-disk -q -m sys /dev/sda
 setup-sshd -c openssh
 setup-ntp -c chrony
 apk update
-apk add sudo nano docker ufw
+apk add sudo
+apk add nano
+apk add docker
+apk add ufw
 rc-update add docker default
 rc-update add ufw default
-adduser -D krozis
+adduser krozis
 echo "krozis ALL=(ALL) ALL" >> /etc/sudoers.d/sudo
 poweroff
