@@ -1,8 +1,10 @@
 FROM debian:buster
 
-RUN apt -y update && apt install -y openssl nginx
+RUN apt-get -y update && apt-get install -y openssl nginx
 
-#COPY ./tools/script.sh /
-#COPY ./tools/nginx.conf /etc/nginx/
+COPY ./tools/script.sh /
+COPY conf /etc/nginx/nginx.conf
 
-#CMD [ "/script.sh" ]
+RUN sh /script.sh
+
+CMD ["nginx","-g", "daemon off;"]
