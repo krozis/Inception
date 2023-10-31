@@ -1,0 +1,18 @@
+version: '3'
+
+networks:
+  inception:
+    name: inception
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx/.
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    env_file:
+      - .env
+    restart: always
+
