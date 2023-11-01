@@ -23,9 +23,11 @@ services:
       - inception
     env_file:
       - .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
     restart: always
 
-  mysql:
+  mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
     image: mariadb:stelie42
@@ -35,4 +37,4 @@ services:
       - .env
     volumes:
       - mariadb_data:/var/lib/mysql
-    restart: always
+    restart: on-failure
