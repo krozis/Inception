@@ -2,9 +2,10 @@ FROM debian:bullseye
 
 RUN apt update -y && apt install mariadb-server -y
 
-COPY ./tools/script.sh /
+COPY ./tools/script.sh_no_env /script.sh
+#COPY ./tools/script.sh /
 
 EXPOSE 3306
 
-RUN sh /script.sh 
+CMD sh /script.sh 
 
