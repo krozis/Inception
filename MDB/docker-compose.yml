@@ -13,22 +13,10 @@ volumes:
       o: bind
 
 services:
-  nginx:
-    container_name: nginx
-    build: ./requirements/nginx
-    image: nginx:stelie42
-    ports:
-      - "443:443"
-    networks:
-      - inception
-    env_file:
-      - .env
-    restart: always
-
   mariadb:
     container_name: mariadb
-    build: ./requirements/mariadb
-    image: mariadb:stelie42
+    build: ./mariadb
+    image: mariadb:MDB
     expose:
       - 3306
     networks:
@@ -41,8 +29,8 @@ services:
 
   db:
     container_name: db
-    build: ./requirements/db
-    image: db:stelie42
+    build: ./db
+    image: db:MDB
     expose:
       - 3306
     depends_on:
@@ -54,3 +42,6 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     restart: on-failure 
+
+
+    

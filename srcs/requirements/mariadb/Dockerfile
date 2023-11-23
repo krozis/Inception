@@ -1,11 +1,15 @@
-FROM debian:bullseye
+FROM alpine:3.17
 
-RUN apt update -y && apt install mariadb-server -y
+#Alpine version
+RUN apk update && \
+  apk add --no-cache \
+  mariadb mariadb-client
 
-COPY ./tools/script.sh_no_env /script.sh
-#COPY ./tools/script.sh /
-
+#Debian version
+#RUN apt update -y && apt install mariadb-server -y && apt upgrade -y
+ 
 EXPOSE 3306
 
-CMD sh /script.sh 
+VOLUME ["/var/lib/mysql"]
 
+CMD [ "mysqld_safe" ]
