@@ -1,15 +1,9 @@
 FROM alpine:3.17
 
-#Alpine version
-RUN apk update && \
-  apk add --no-cache \
-  mariadb mariadb-client
+LABEL "author"="stelie"
 
-#Debian version
-#RUN apt update -y && apt install mariadb-server -y && apt upgrade -y
- 
-EXPOSE 3306
+RUN apk update && apk upgrade && apk add mariadb mariadb-client
 
-VOLUME ["/var/lib/mysql"]
+COPY ./tools/init_db.sh  /tmp/init_db.sh
 
-CMD [ "mysqld_safe" ]
+ENTRYPOINT ["sh", "/tmp/init_db.sh"]
