@@ -8,15 +8,15 @@ up:
 down:
 	docker-compose -f srcs/docker-compose.yml down
 
-re: down clean_volume clean_containers all
+stop: down clean_containers clean_volume
+
+re: stop all
 
 clean_containers:
-					docker rmi mariadb:stelie42
-#					docker rmi nginx:stelie42
+					docker rmi nginx:stelie42 mariadb:stelie42
 
 clean_volume:
-	sudo rm -rf /home/${USER}/data/mariadb_data/*
-	sudo rm -rf /home/${USER}/data/wordpress_data/*
+	sudo rm -rf /home/${USER}/data/*
 
 fclean: clean_volume
 	docker system prune -a -f
