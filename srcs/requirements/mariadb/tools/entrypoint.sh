@@ -1,10 +1,25 @@
 #!/bin/sh
 
-# Create temporary file and ensure it exists.
-file="/tmp/pleasehelpmefinishthisprojectsoon"
+# Ensure if the /run/mysqld exists and gives ownership to mysql user.
+if [ ! -d "/run/mysqld" ]; then
+	mkdir -p /run/mysqld
+	chown -R mysql:mysql /run/mysqld
+fi
 
-# Fill the tmp file with MySql commands.
-cat << EOF > $file
+# Check if database exists.
+if [ ! -d "/var/lib/mysql/mysql" ]; then
+	
+	# Gives ownership for /var/lib/mysql to mysql user.
+	chown -R mysql:mysql /var/lib/mysql
+
+	# Initializing the database
+	mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+
+	# To create temporary file
+	file="/tmp/pleasehelpmefinishthisprojectsoon"
+
+	# Fill the tmp file with MySql commands.
+	cat << EOF > $file
 USE mysql;
 FLUSH PRIVILEGES;
 DELETE FROM	mysql.user WHERE User='';
@@ -18,9 +33,11 @@ GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$MY_USER'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-# Use the tmp file to configure the database and remove it.
-/usr/bin/mysqld --user=mysql --bootstrap < $file
-rm -f $file
+	# Use the tmp file to configure the database then remove it.
+	/usr/bin/mysqld --user=mysql --bootstrap < $file
+	rm -f $file
+
+fi
 
 # Modify configuration to allow network connections:
 
