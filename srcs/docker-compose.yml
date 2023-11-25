@@ -19,8 +19,7 @@ volumes:
 services:
   nginx:
     container_name: nginx
-    build:
-      context: requirements/nginx
+    build: requirements/nginx
     image: nginx:stelie42
     ports:
       - "443:443"
@@ -28,12 +27,15 @@ services:
       - inception
     env_file:
       - .env
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
     restart: always
 
   mariadb:
     container_name: mariadb
-    build:
-      context: requirements/mariadb
+    build: requirements/mariadb
     image: mariadb:stelie42
     expose:
       - "3306"
@@ -43,4 +45,20 @@ services:
       - .env
     volumes:
       - mariadb_data:/var/lib/mysql
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build: requirements/wordpress
+    image: wordpress:stelie42
+    expose:
+      - "9000"
+    networks:
+      - inception
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html
+    depends_on:
+      - mariadb
     restart: always
