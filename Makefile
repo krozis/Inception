@@ -8,21 +8,31 @@ up:
 down:
 	docker-compose -f srcs/docker-compose.yml down
 
-stop: down clean_containers clean_volume
+rdb: down clean_volume clean_db all
+
+stop: down clean_all
 
 re: stop all
 
-clean_containers:
-					docker rmi nginx:stelie42 mariadb:stelie42
-
 clean_volume:
+	docker volume rm -f wordpress mariadb
 	sudo rm -rf /home/${USER}/data/*
 
-fclean: clean_volume
+clean_ng:
+			docker rmi nginx:stelie42
+
+clean_db:
+			docker rmi mariadb:stelie42
+
+clean_wp:
+			docker rmi wordpress:stelie42
+
+clean_all: clean_volume clean_ng clean_db clean_wp
+
+fclean: clean_all
 	docker system prune -a -f
 
 pull:
-	docker pull debian:bullseye
 	docker pull alpine:3.17
 
 	

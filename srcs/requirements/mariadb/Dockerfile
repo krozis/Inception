@@ -4,6 +4,10 @@ LABEL "author"="stelie"
 
 RUN apk update && apk upgrade && apk add mariadb mariadb-client
 
-COPY ./tools/init_db.sh  /tmp/init_db.sh
+RUN mkdir -p /run/mysqld/ && chown -R mysql:mysql /run/mysqld && chown -R mysql:mysql /var/lib/mysql
+RUN mariadb-install-db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
 
-ENTRYPOINT ["sh", "/tmp/init_db.sh"]
+COPY ./tools/entrypoint.sh /tmp/entrypoint.sh
+
+
+ENTRYPOINT ["sh", "/tmp/entrypoint.sh"]
