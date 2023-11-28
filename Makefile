@@ -8,7 +8,7 @@ up:
 down:
 	docker-compose -f srcs/docker-compose.yml down
 
-rdb: down clean_volume clean_db all
+cool: down clean_volume clean_wp all
 
 stop: down clean_all
 
