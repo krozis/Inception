@@ -3,6 +3,7 @@ version: '3'
 networks:
   inception:
     name: inception
+    driver: bridge
 
 volumes:
   mariadb_data:

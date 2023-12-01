@@ -14,21 +14,35 @@ RUN apk update && apk upgrade && apk add --no-cache \
     $PHP_VERSION \
     $PHP_VERSION-fpm \
     $PHP_VERSION-mysqli \
-	$PHP_VERSION-phar
+	$PHP_VERSION-phar \
+	$PHP_VERSION-mbstring \
+	$PHP_VERSION-openssl \
+	$PHP_VERSION-xml \
+	$PHP_VERSION-tokenizer \
+	$PHP_VERSION-session \ 
+	$PHP_VERSION-fileinfo \
+	$PHP_VERSION-exif \
+	$PHP_VERSION-json \
+	$PHP_VERSION-dom \
+	$PHP_VERSION-iconv \
+	$PHP_VERSION-curl \
+	$PHP_VERSION-zip
 
-#COPY conf/php.conf /etc/php81/php-fpm.d/www.conf
+# Copy the php.conf file
+COPY conf/php.conf /etc/php81/php-fpm.d/www.conf
 
 # Install Wordpress
-WORKDIR /var/www/stelie.42.fr
+WORKDIR /var/www/html
 RUN wget https://wordpress.org/wordpress-$WP_VERSION.tar.gz -O wp.tar.gz
 RUN tar xzf wp.tar.gz && rm wp.tar.gz && mv wordpress/* . && rmdir wordpress
-RUN chown -R root:root /var/www/stelie.42.fr
+RUN chown -R root:root /var/www/html
 
 # Installing Wordpress CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-
+# Copy the script
 COPY /tools/entrypoint.sh /tmp/entrypoint.sh
 
+# Start from the entrypoint file
 ENTRYPOINT [ "sh", "/tmp/entrypoint.sh" ]
