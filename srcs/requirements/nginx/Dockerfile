@@ -15,6 +15,7 @@ RUN openssl req -x509 -days 365 -newkey rsa:4096 -nodes \
 # Copy NGINX configuration file
 RUN mkdir -p /run/nginx
 COPY conf/nginx.conf /etc/nginx/
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Start NGINX
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
