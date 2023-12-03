@@ -24,24 +24,25 @@ RUN apk update && apk upgrade && apk add --no-cache \
 	php-openssl \
 	php-xml \
 	php-phar \
+	php-iconv \
 	php-zip 
 	#php-tokenizer \
 	#php-session \ 
-	#php-iconv \
 	
 
 # Copy the php.conf file
 COPY conf/php.conf /etc/$PHP_VERSION/php-fpm.d/www.conf
 
 # Install Wordpress
-WORKDIR /var/www/$DOMAIN_NAME
-RUN wget https://wordpress.org/wordpress-$WP_VERSION.tar.gz -O wp.tar.gz
-RUN tar xzf wp.tar.gz && rm wp.tar.gz && mv wordpress/* . && rmdir wordpress
-#RUN chown -R root:root /var/www/$DOMAIN_NAME
+# RUN wget https://wordpress.org/wordpress-$WP_VERSION.tar.gz -O wp.tar.gz
+# RUN tar xzf wp.tar.gz && rm wp.tar.gz && mv wordpress/* . && rmdir wordpress
+# RUN chown -R root:root /var/www/$DOMAIN_NAME
 
 # Installing Wordpress CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
+
+WORKDIR /var/www/$DOMAIN_NAME
 
 # Copy the script
 COPY /tools/entrypoint.sh /tmp/entrypoint.sh
