@@ -5,12 +5,10 @@ up:
 	@mkdir -p /home/${USER}/data/wordpress_data
 	docker-compose -f srcs/docker-compose.yml up -d
 
-down:
+down: clean_volume
 	docker-compose -f srcs/docker-compose.yml down
 
-stop: down clean_all
-
-re: stop all
+re: fclean all
 
 clean_volume:
 	docker volume rm -f wordpress mariadb
@@ -27,7 +25,9 @@ clean_wp:
 
 clean_all: clean_volume clean_ng clean_db clean_wp
 
-fclean: clean_all
+fclean: down clean_all
+
+purge: fclean
 	docker system prune -a -f
 
 pull:
