@@ -2,7 +2,7 @@ FROM alpine:3.17
 
 LABEL "author"="stelie"
 
-RUN apk update && apk upgrade && apk add mariadb mariadb-client
+RUN apk update && apk upgrade && apk add --no-cache mariadb mariadb-client
 
 COPY ./tools/entrypoint.sh /tmp/entrypoint.sh
 
