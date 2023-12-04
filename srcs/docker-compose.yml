@@ -29,7 +29,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress_data:/var/www/stelie.42.fr
+      - ~/data/wordpress_data:/var/www/stelie.42.fr
     depends_on:
       - wordpress
     restart: always
@@ -45,7 +45,7 @@ services:
     env_file:
       - .env
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - ~/data/mariadb_data:/var/lib/mysql
     restart: always
 
   wordpress:
@@ -59,7 +59,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress_data:/var/www/stelie.42.fr
+      - ~/data/wordpress_data:/var/www/stelie.42.fr
     depends_on:
       - mariadb
     restart: always
