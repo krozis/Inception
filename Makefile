@@ -31,7 +31,7 @@ re: fclean all
 
 clean_volume:
 	docker volume rm -f $(DATA_PREFIX)_$(DB_DATA) $(DATA_PREFIX)_$(WP_DATA)
-	sudo $(RM) $(WP_DATA_DIR) $(DB_DATA_DIR)
+	$(RM) $(WP_DATA_DIR) $(DB_DATA_DIR)
 
 clean_images:	clean_ng clean_db clean_wp
 
