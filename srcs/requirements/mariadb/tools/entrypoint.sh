@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# MADE BY stelie
+# FOR THE Inception PROJECT
+# 42Born2Code @ Paris
+
 # Ensure if the /run/mysqld exists and gives ownership to mysql user.
 if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld

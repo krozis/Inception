@@ -7,14 +7,16 @@ networks:
 
 volumes:
   mariadb_data:
+    driver: local
     driver_opts:
+      device: ~/data/db_data
       type: none
-      device: ~/data/mariadb_data
       o: bind
   wordpress_data:
+    driver: local    
     driver_opts:
+      device: ~/data/wp_data
       type: none
-      device: "~/data/wordpress_data"
       o: bind
 
 services:
@@ -29,7 +31,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ~/data/wordpress_data:/var/www/stelie.42.fr
+      - wordpress_data:/var/www/stelie.42.fr
     depends_on:
       - wordpress
     restart: always
@@ -45,7 +47,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ~/data/mariadb_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     restart: always
 
   wordpress:
@@ -59,7 +61,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ~/data/wordpress_data:/var/www/stelie.42.fr
+      - wordpress_data:/var/www/stelie.42.fr
     depends_on:
       - mariadb
     restart: always

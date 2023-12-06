@@ -2,8 +2,7 @@ FROM alpine:3.17
 
 LABEL "author"="stelie"
 
-# Specify which software versions to use.
-ENV WP_VERSION=6.3.2
+# Environment
 ENV PHP_VERSION=php81
 ENV DOMAIN_NAME=stelie.42.fr
 
@@ -35,13 +34,7 @@ COPY conf/php.conf /etc/$PHP_VERSION/php-fpm.d/www.conf
 RUN echo "clear_env=no" >> /etc/$PHP_VERSION/php.ini
 RUN echo "listen=wordpress:9000" >> /etc/$PHP_VERSION/php.ini
 
-
 WORKDIR /var/www/$DOMAIN_NAME
-
-# Install Wordpress
-# RUN wget https://wordpress.org/wordpress-$WP_VERSION.tar.gz -O wp.tar.gz
-# RUN tar xzf wp.tar.gz && rm wp.tar.gz && mv wordpress/* . && rmdir wordpress
-# RUN chown -R root:root /var/www/$DOMAIN_NAME
 
 # Installing Wordpress CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

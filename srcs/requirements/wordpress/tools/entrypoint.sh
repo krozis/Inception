@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# MADE BY stelie
+# FOR THE Inception PROJECT
+# 42Born2Code @ Paris
+
 # Wait for MariaDB to be running
 until mariadb --host=$DB_HOSTNAME --user=$MY_USER --password=$MY_PASSWORD -e '\c' &>/dev/null; do
   echo >&2 "mariadb is unavailable - sleeping"

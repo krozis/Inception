@@ -5,7 +5,7 @@ LABEL "author"="stelie"
 # Install OpenSSL and NGINX
 RUN apk update && apk upgrade && apk add --no-cache openssl nginx
 
-# SSL Configuration
+# SSL Certificate
 RUN mkdir /etc/nginx/ssl
 RUN openssl req -x509 -days 365 -newkey rsa:4096 -nodes \
     -out /etc/nginx/ssl/nginx_selfsigned.crt \
